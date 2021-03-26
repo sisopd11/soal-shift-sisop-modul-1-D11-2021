@@ -1,0 +1,2 @@
+0 7 * * sat,sun bash soal3d.sh
+0 18 * * sat,sun unzip -P `date +%m%d%Y` Koleksi.zip && rm Koleksi.zip

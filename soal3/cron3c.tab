@@ -1,0 +1,2 @@
+0 20 1/2 * * bash soal3a.sh && soal3b.sh
+0 20 2/2 * * bash soal3c.sh

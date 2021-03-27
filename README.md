@@ -31,9 +31,6 @@ do
 done
 ```
 Disini, loop while akan melakukan `wget` untuk mendownload file dari link sebanyak 23 kali. Pada line `wget`, saya menggunakan option:
-- __-N__ (--timestamping)
-  `-N` berfungsi agar `wget` tidak mendownload file yang bernama sama, kecuali file tersebut yang ada pada server dilakukan modifikasi.
-- __--content-disposition__
-  `--content-disposition` berfungsi agar nama file yang didownload disamakan dengan nama file yang berada di server.
-- __-a [FILE]__ (append)
-  `-a` berfungsi agar log dari wget ditambahkan kedalam `[FILE]`
+- `__-N__ `(--timestamping) : berfungsi agar `wget` tidak mendownload file yang bernama sama, kecuali file tersebut yang ada pada server dilakukan modifikasi.
+- `__--content-disposition__` : berfungsi agar nama file yang didownload disamakan dengan nama file yang berada di server.
+- `__-a [FILE]__` (append) : berfungsi agar log dari wget ditambahkan kedalam `[FILE]`

@@ -79,24 +79,6 @@ done >> 'error_message.csv'
 ```
 
 
-BEGIN{FS="\t"}
-{
-   if(NR!=1){
-    segment[$8]++
-  }
-}
-END {
-  minSales=10000
-  for(temp in segment){
-    if(minSales > segment[temp]){
-      minSales = segment[temp]
-      sum = temp;
-    }
-  }
-  printf("\nTipe segment customer yang penjualannya paling sedikit adalah %s dengan segment %.1f\n", sum, minSales)
-}' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
-menggunakan AWK
-
 #SOAL NO.2
 a. Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.
 ```

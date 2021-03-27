@@ -31,9 +31,93 @@ do
 done
 ```
 Disini, loop while akan melakukan `wget` untuk mendownload file dari link sebanyak 23 kali. Pada line `wget`, saya menggunakan option:
-- __-N__ (--timestamping)
-  `-N` berfungsi agar `wget` tidak mendownload file yang bernama sama, kecuali file tersebut yang ada pada server dilakukan modifikasi.
-- __--content-disposition__
-  `--content-disposition` berfungsi agar nama file yang didownload disamakan dengan nama file yang berada di server.
-- __-a [FILE]__ (append)
-  `-a` berfungsi agar log dari wget ditambahkan kedalam `[FILE]`
+- `-N` (--timestamping) : berfungsi agar `wget` tidak mendownload file yang bernama sama, kecuali file tersebut yang ada pada server dilakukan modifikasi.
+- `--content-disposition` : berfungsi agar nama file yang didownload disamakan dengan nama file yang berada di server.
+- `-a [FILE]` (append) : berfungsi agar log dari wget ditambahkan kedalam `[FILE]`
+
+Kemudian, digunakan for loop dengan daftar itemnya berupa file yang mempunyai format jpg dapat dipilih dengan menggunakan ``
+`ls | grep jpg$`
+``. Isi dari loop yaitu merubah nama nama file tersebut yang awalnya mengambil nama server, menjadi bentuk Koleksi_N (Koleksi_1, Koleksi_2, dst) menggunakan `mv`.
+
+b. Agar foto-foto dan file log dimasukkan ke dalam suatu folder, digunakan :
+
+```shell
+#!/bin/bash
+
+
+tanggal=`date +%d-%m-%Y`
+mkdir "Kucing_$tanggal"
+i=1
+
+for name in `ls | grep jpg$`
+do
+	mv "$name" "Kucing_$tanggal"/
+	i=$((i+1))
+done
+
+mv Foto.txt "Kucing_$tanggal"/
+```
+
+Agar nama dari file menjadi berupa tanggal dengan format dd-mm-yyyy, digunakan `date +%d-%m-%Y`. Selanjutanya dengan loop for yang sama dengan sebelumnya, foto dan lognya dimasukkan kedalam file  Kucing_[tanggal].
+Crontab agar scriptnya berjalan hanya pada jam 8 malam setiap tanggal 1 dengan increment 7 dan tanggal 2 dengan increment 4, maka digunakan :
+```shell
+0 20 1/7 * * bash soal3a.sh && soal3b.sh
+0 20 2/4 * * bash soal3a.sh && soal3b.sh
+```
+
+c. Untuk mendownload foto kelinci kodenya sama dengan soal 3a, tetapi linknya diganti. kemudian digabungkan  kedalam satu file Kelinci_[Tanggal] seperti soal 3b, sehingga menjadi:
+```shell
+#!/bin/bash
+
+CAT_LINK="https://loremflickr.com/320/240/bunny"
+i=1
+tanggal=`date +%d-%m-%Y`
+mkdir "Kelinci_$tanggal"
+
+while [ $i -le 23 ]
+do	
+	wget -N --content-disposition $CAT_LINK -a Foto.txt
+	i=$((i+1))
+done
+
+
+i=1
+
+for name in `ls | grep jpg$`
+do
+	mv "$name" "Kelinci_$tanggal"/"Koleksi_$i.jpg"
+	i=$((i+1))
+done
+
+mv Foto.txt "Kelinci_$tanggal"/
+```
+Agar file yang didownload alternate setiap harinya antara kucing dan kelinci, maka crontabnya berupa :
+```
+0 20 1/2 * * bash soal3a.sh && soal3b.sh
+0 20 2/2 * * bash soal3c.sh
+```
+
+d. Untuk menjadikan semua folder Kucing_ dan Kelinci_ menjadi 1 file zip dengan password sesuai dengan tanggal, maka digunakan :
+```shell
+  
+#!/bin/bash
+
+tanggal=`date +%m%d%Y`
+
+for FILE in `ls | grep 'Kelinci_\|Kucing_'`
+do
+	zip -rm -P $tanggal "Koleksi.zip" $FILE
+done
+```
+Karena passwordnya merupakan tanggal dengan format mmddyyy, maka digunakan `date +%m%d%Y`. Selanjutan, agar semua file berawalan Kelinci_ dan Kucing_ menjadi list dalam loop for, digunakan ``
+`ls | grep 'Kelinci_\|Kucing_'`
+``
+. File-file tersebut kemudian dimasukkan kedalam zip dengan menggunakan opstion :
+- `-rm` : agar file yang sudah dimasukkan ke dalam zip dihapus
+- `-P [Password]` : agar file zip terlindungi password [Password]
+
+e. Agar semua file koleksi tersebut hanya dizip setiap jam 7 pagi dan diunzip pada jam 6 malam setiap harinya kecuali hari sabtu dan minggu, digunakan crontab berikut :
+```shell
+0 7 * * mon-fri bash soal3d.sh
+0 18 * * mon-fri unzip -P `date +%m%d%Y` Koleksi.zip && rm Koleksi.zip
+```

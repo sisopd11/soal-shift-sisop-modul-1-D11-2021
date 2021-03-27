@@ -1,0 +1,9 @@
+Transaksi terkahir dengan profit persentase terbesar yaitu 9952 dengan persentase 100%
+
+Daftar nama customer di Alburquerque pada tahun 2017 antara lain :
+David Wiener
+Susan Vittorini
+Benjamin Farhat
+Michelle Lonsdale
+
+Tipe segment customer yang penjualannya paling sedikit adalah Home Office dengan segment 1783.0

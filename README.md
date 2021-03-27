@@ -1,6 +1,6 @@
 # soal-shift-sisop-modul-1-D11-2021
 
-##Soal No 1
+## Soal No 1
 Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberikan tugas untuk membuat laporan harian untuk aplikasi internal perusahaan, ticky. Terdapat 2 laporan yang harus dia buat, yaitu laporan daftar peringkat pesan error terbanyak yang dibuat oleh ticky dan laporan penggunaan user pada aplikasi ticky. Untuk membuat laporan tersebut, Ryujin harus melakukan beberapa hal berikut:
 (a) Mengumpulkan informasi dari log aplikasi yang terdapat pada file syslog.log. Informasi yang diperlukan antara lain: jenis log (ERROR/INFO), pesan log, dan username pada setiap baris lognya. Karena Ryujin merasa kesulitan jika harus memeriksa satu per satu baris secara manual, dia menggunakan regex untuk mempermudah pekerjaannya. Bantulah Ryujin membuat regex tersebut.
 
@@ -32,21 +32,23 @@ ryujin.1203,1,3
 
 - Tidak boleh menggunakan AWK
 
-###Jawaban 1a
+### Jawaban 1a
 ```
 #!/bin/bash
 #No1_a
 #Ambil data kata depan Error or Info sampe username dari file syslog.log
 grep -o '[E|I].*' syslog.log
 ```
-###Jawaban 1b
+
+### Jawaban 1b
 ```
 #!/bin/bash
 #No1_b
 #Ambil data log Error tapi bagian username di cut, urut abc, sama hitung banyak errornya
 grep -o 'E.*' syslog.log | cut -d"(" -f 1| sort | uniq -c
 ```
-###Jawaban 1c
+
+### Jawaban 1c
 ```
 #!/bin/bash
 #No1_c
@@ -58,7 +60,7 @@ echo Info:
 grep -o 'I.*' syslog.log | cut --complement -d"(" -f 1 | cut -d")" -f 1 | sort | uniq -c
 ```
 
-###Jawaban 1d
+### Jawaban 1d
 ```
 #No1_d
 #File error_message #OK

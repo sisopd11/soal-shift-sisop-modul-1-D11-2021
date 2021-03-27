@@ -66,7 +66,6 @@ END {
       regmin = listRegion[k]
       minwil = k
     }
-    printf("%s %d",k,listRegion[k])
   }
   printf("\nWilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah %s dengan total keuntungan %.1f\n", minwil, regmin);
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt

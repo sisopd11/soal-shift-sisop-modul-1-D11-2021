@@ -7,5 +7,5 @@ Benjamin Farhat
 Michelle Lonsdale
 
 Tipe segment customer yang penjualannya paling sedikit adalah Home Office dengan segment 1783.0
-South 46749Central 39706West 108418East 91522
+
 Wilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah Central dengan total keuntungan 39706.4

@@ -50,5 +50,24 @@ END {
   printf("\nTipe segment customer yang penjualannya paling sedikit adalah %s dengan segment %.1f\n", sum, minSales)
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 
-
+#2d
+export LC_ALL=C
+awk '
+BEGIN{FS="\t"}
+{
+   if(NR!=1){
+    listRegion[$13]+=$21
+  }
+}
+END {
+  regmin=99999
+  for(k in listRegion){
+    if (listRegion[k] < regmin){
+      regmin = listRegion[k]
+      minwil = k
+    }
+    printf("%s %d",k,listRegion[k])
+  }
+  printf("\nWilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah %s dengan total keuntungan %.1f\n", minwil, regmin);
+}' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 

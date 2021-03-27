@@ -1,42 +1,112 @@
 # soal-shift-sisop-modul-1-D11-2021
 
-### Soal No 1
+##Soal No 1
 Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberikan tugas untuk membuat laporan harian untuk aplikasi internal perusahaan, ticky. Terdapat 2 laporan yang harus dia buat, yaitu laporan daftar peringkat pesan error terbanyak yang dibuat oleh ticky dan laporan penggunaan user pada aplikasi ticky. Untuk membuat laporan tersebut, Ryujin harus melakukan beberapa hal berikut:
+(a) Mengumpulkan informasi dari log aplikasi yang terdapat pada file syslog.log. Informasi yang diperlukan antara lain: jenis log (ERROR/INFO), pesan log, dan username pada setiap baris lognya. Karena Ryujin merasa kesulitan jika harus memeriksa satu per satu baris secara manual, dia menggunakan regex untuk mempermudah pekerjaannya. Bantulah Ryujin membuat regex tersebut.
 
-**(a)** Mengumpulkan informasi dari log aplikasi yang terdapat pada file `syslog.log`. Informasi yang diperlukan antara lain: jenis log `(ERROR/INFO)`, pesan log, dan username pada setiap baris lognya. Karena Ryujin merasa kesulitan jika harus memeriksa satu per satu baris secara manual, dia menggunakan regex untuk mempermudah pekerjaannya. Bantulah Ryujin membuat regex tersebut.
+(b) Kemudian, Ryujin harus menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
 
-**(b)** Kemudian, Ryujin harus menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
+(c) Ryujin juga harus dapat menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.
 
-**(c)** Ryujin juga harus dapat menampilkan jumlah kemunculan log `ERROR` dan `INFO` untuk setiap user-nya.
+Setelah semua informasi yang diperlukan telah disiapkan, kini saatnya Ryujin menuliskan semua informasi tersebut ke dalam laporan dengan format file csv.
 
-Setelah semua informasi yang diperlukan telah disiapkan, kini saatnya Ryujin menuliskan semua informasi tersebut ke dalam laporan dengan format file `csv`.
-
-**(d)** Semua informasi yang didapatkan pada poin b dituliskan ke dalam file `error_message.csv` dengan header `Error,Count` yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya **diurutkan** berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
-
+(d) Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
 Contoh:
-```
-Error,Count
+``Error,Count
 Permission denied,5
 File not found,3
 Failed to connect to DB,2
-```
+``
 
-**(e)** Semua informasi yang didapatkan pada poin c dituliskan ke dalam file `user_statistic.csv` dengan header `Username,INFO,ERROR` **diurutkan** berdasarkan username secara ascending.
-
+(e) Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
 Contoh:
-```
-Username,INFO,ERROR
+``Username,INFO,ERROR
 kaori02,6,0
 kousei01,2,2
 ryujin.1203,1,3
+Catatan :
+-Setiap baris pada file syslog.log mengikuti pola berikut:
+``<time> <hostname> <app_name>: <log_type> <log_message> (<username>)``
+-Tidak boleh export LC_ALL=C
+awk '
+BEGIN{FS="\t"}
+{
+   if(NR!=1){
+    segment[$8]++
+  }
+}
+END {
+  minSales=10000
+  for(temp in segment){
+    if(minSales > segment[temp]){
+      minSales = segment[temp]
+      sum = temp;
+    }
+  }
+  printf("\nTipe segment customer yang penjualannya paling sedikit adalah %s dengan segment %.1f\n", sum, minSales)
+}' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
+menggunakan AWK
+
+#SOAL NO.2
+a. Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.
 ```
-**Catatan :**
+export LC_ALL=C
+awk '
+BEGIN{FS="\t"}
+{
+  profit=$21;
+  costPrice=$18-$21;
+ profitpersentase=profit/costPrice*100
+   if(maks<=profitpersentase){
+     maks=profitpersentase
+     RowID=$1s}
+}
+END {
+ printf("Transaksi terkahir dengan profit persentase terbesar yaitu %d dengan persentase %d%%\n", RowID, maks)
+} ' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
+```
+#No.2B
+Pada soal ini kita akan menampilkan nama seluruh customer yang melakukan transaksi pada tahun 2017 di Albuquerque
+```
+export LC_ALL=
+awk '
+BEGIN{FS="\t"}
+{
+  tahun=$2;
+  city=$10;
+  if(tahun~"2017" && city=="Albuquerque"){
+    arrlist[$7]++
+  }
+}
+END{
+  print "\nDaftar nama customer di Alburquerque pada tahun 2017 antara lain :"
+  for(customerName in arrlist)
+  {print customerName}
+}' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
+```
+#No.2C
+Pada soal ini kita akan menampilkan jumlah transaksi yang paling sedikit dari tiga segment customer
+```
+export LC_ALL=C
+awk '
+BEGIN{FS="\t"}
+{
+   if(NR!=1){
+    segment[$8]++
+  }
+}
+END {
+  minSales=10000
+  for(temp in segment){
+    if(minSales > segment[temp]){
+      minSales = segment[temp]
+      sum = temp;
+    }
+  }
+  printf("\nTipe segment customer yang penjualannya paling sedikit adalah %s dengan segment %.1f\n", sum, minSales)
+}' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
+```
 
-- Setiap baris pada file syslog.log mengikuti pola berikut:
-
- ```<time> <hostname> <app_name>: <log_type> <log_message> (<username>)```
-
-- Tidak boleh menggunakan AWK
 
 ### Soal No 3
 a. Pada soal ini, kita diminta untuk mendownload gambar dari https://loremflickr.com/320/240/kitten sebanyak 23 buah tanpa ada gambar yang sama. Kemudian memasukkan log dari download tersebut kedalam file Foto.log. Kode yang saya gunakan yaitu:

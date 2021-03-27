@@ -24,11 +24,59 @@ Contoh:
 kaori02,6,0
 kousei01,2,2
 ryujin.1203,1,3
-Catatan :
--Setiap baris pada file syslog.log mengikuti pola berikut:
-``<time> <hostname> <app_name>: <log_type> <log_message> (<username>)``
--Tidak boleh export LC_ALL=C
-awk '
+**Catatan :**
+
+- Setiap baris pada file syslog.log mengikuti pola berikut:
+
+ ```<time> <hostname> <app_name>: <log_type> <log_message> (<username>)```
+
+- Tidak boleh menggunakan AWK
+
+###Jawaban 1a
+```
+#!/bin/bash
+#No1_a
+#Ambil data kata depan Error or Info sampe username dari file syslog.log
+grep -o '[E|I].*' syslog.log
+```
+###Jawaban 1b
+```
+#!/bin/bash
+#No1_b
+#Ambil data log Error tapi bagian username di cut, urut abc, sama hitung banyak errornya
+grep -o 'E.*' syslog.log | cut -d"(" -f 1| sort | uniq -c
+```
+###Jawaban 1c
+```
+#!/bin/bash
+#No1_c
+#Ambil data log error cuma jumlah error for each username
+echo Error:
+grep -o 'E.*' syslog.log | cut --complement -d"(" -f 1 | cut -d")" -f 1 | sort | uniq -c
+#Ambil data log info cuma jumlah info for each username
+echo Info:
+grep -o 'I.*' syslog.log | cut --complement -d"(" -f 1 | cut -d")" -f 1 | sort | uniq -c
+```
+
+###Jawaban 1d
+```
+#No1_d
+#File error_message #OK
+echo 'Error,Count' > 'error_message.csv'
+
+#Ambil error messages sama jumlah #FAIL
+grep -o 'E.*' syslog.log | sort | uniq -c | sort -nr while read myfile
+#Divide error sama jumlah
+do
+	#ambil error
+	error=($(echo $myfile | cut =d " " -f 2-)
+	#ambil jumlah
+	count=($(echo $myfile | cut -d " " -f 1 )
+	echo "$error, $count"
+done >> 'error_message.csv'
+```
+
+
 BEGIN{FS="\t"}
 {
    if(NR!=1){

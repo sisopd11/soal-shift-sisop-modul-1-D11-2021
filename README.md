@@ -12,7 +12,8 @@ Setelah semua informasi yang diperlukan telah disiapkan, kini saatnya Ryujin men
 
 (d) Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
 Contoh:
-``Error,Count
+``
+Error,Count
 Permission denied,5
 File not found,3
 Failed to connect to DB,2
@@ -20,10 +21,13 @@ Failed to connect to DB,2
 
 (e) Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
 Contoh:
-``Username,INFO,ERROR
+``
+Username,INFO,ERROR
 kaori02,6,0
 kousei01,2,2
 ryujin.1203,1,3
+```
+
 **Catatan :**
 
 - Setiap baris pada file syslog.log mengikuti pola berikut:
@@ -79,7 +83,7 @@ done >> 'error_message.csv'
 ```
 
 
-#SOAL NO.2
+## SOAL No.2
 a. Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.
 ```
 export LC_ALL=C
@@ -97,7 +101,7 @@ END {
  printf("Transaksi terkahir dengan profit persentase terbesar yaitu %d dengan persentase %d%%\n", RowID, maks)
 } ' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-#No.2B
+### No.2B
 Pada soal ini kita akan menampilkan nama seluruh customer yang melakukan transaksi pada tahun 2017 di Albuquerque
 ```
 export LC_ALL=
@@ -116,7 +120,7 @@ END{
   {print customerName}
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-#No.2C
+### No.2C
 Pada soal ini kita akan menampilkan jumlah transaksi yang paling sedikit dari tiga segment customer
 ```
 export LC_ALL=C
@@ -138,7 +142,7 @@ END {
   printf("\nTipe segment customer yang penjualannya paling sedikit adalah %s dengan segment %.1f\n", sum, minSales)
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-#2d
+### 2d
 Pada soal ini kita akan mencari wilayah bagian atau region yang memiliki profit paling sedikit dan kita akan menampilkan total keuntungan dari region yang telah kita cari sebelumnya.
 ```
 export LC_ALL=C
@@ -161,7 +165,7 @@ END {
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
 
-### Soal No 3
+## Soal No 3
 a. Pada soal ini, kita diminta untuk mendownload gambar dari https://loremflickr.com/320/240/kitten sebanyak 23 buah tanpa ada gambar yang sama. Kemudian memasukkan log dari download tersebut kedalam file Foto.log. Kode yang saya gunakan yaitu:
 
 ```shell

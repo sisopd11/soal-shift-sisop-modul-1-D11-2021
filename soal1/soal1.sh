@@ -7,7 +7,7 @@ printf "\n"
 
 #b
 # Ambil data log Error tapi bagian username di cut, urut abc, sama hitung banyak errornya
-grep -o 'E.*' syslog.log | cut -d"(" -f 1| sort | uniq -c
+grep -o 'E.*' syslog.log | cut -d"(" -f1| sort | uniq -c
 printf "\n"
 
 #c

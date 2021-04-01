@@ -10,13 +10,15 @@ printf "\n"
 grep -o 'E.*' syslog.log | cut -d"(" -f 1| sort | uniq -c
 printf "\n"
 
-#No1_c
-#Ambil data log error cuma jumlah error for each username
+#c
+# Ambil data log error cuma jumlah error sama username
 echo Error:
-grep -o 'E.*' syslog.log | cut --complement -d"(" -f 1 | cut -d")" -f 1 | sort | uniq -c
-#Ambil data log info cuma jumlah info for each username
+grep -o 'E.*' syslog.log | cut --complement -d"(" -f1 | cut -d")" -f 1 | sort | uniq -c
+
+# Ambil data log info cuma jumlah info sama username
 echo Info:
-grep -o 'I.*' syslog.log | cut --complement -d"(" -f 1 | cut -d")" -f 1 | sort | uniq -c
+grep -o 'I.*' syslog.log | cut --complement -d"(" -f1 | cut -d")" -f 1 | sort | uniq -c
+printf "\n"
 
 #No1_d
 #File error_message #OK

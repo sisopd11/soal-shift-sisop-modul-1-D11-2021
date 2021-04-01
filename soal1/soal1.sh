@@ -1,8 +1,9 @@
 #!/bin/bash
 
-#No1_a
-#Ambil data kata depan Error or Info sampe username dari file syslog.log
-grep -o '[E|I].*' syslog.log
+#a
+# Ambil data kata depan E or I sampe seterusnya bebas dari file syslog.log
+grep -o '[E|I].*' syslog.log 
+printf "\n"
 
 #No1_b
 #Ambil data log Error tapi bagian username di cut, urut abc, sama hitung banyak errornya

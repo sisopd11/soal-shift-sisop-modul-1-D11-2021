@@ -20,20 +20,25 @@ echo Info:
 grep -o 'I.*' syslog.log | cut --complement -d"(" -f1 | cut -d")" -f 1 | sort | uniq -c
 printf "\n"
 
-#No1_d
-#File error_message #OK
-echo 'Error,Count' > 'error_message.csv'
+#d
+# File error_message #OK
+printf 'Error, Count\n' > error_message.csv
 
-#Ambil error messages sama jumlah #FAIL
-grep -o 'E.*' syslog.log | sort | uniq -c | sort -nr while read myfile
-#Divide error sama jumlah
+# Save error message
+grep "E.*" syslog.log | cut -d' ' -f7- | cut -d'(' -f1 | sort | uniq -c | sort -nr | tr -d '[0-9]' | sed -e 's/^[[:space:]]*//' > message.csv
+
+# Save count error for each message
+grep "E.*" syslog.log | cut -d' ' -f7- | cut -d'(' -f1 | sort | uniq -c | sort -nr | grep -Eo '[0-9]{1,}' > count.csv
+
+# Assign message.csv and count.csv ke f1 dan f2
+paste message.csv count.csv | while IFS="$(printf '\t')" read -r f1 f2
 do
-	#ambil error
-	error=($(echo $myfile | cut =d " " -f 2-)
-	#ambil jumlah
-	count=($(echo $myfile | cut -d " " -f 1 )
-	echo "$error, $count"
-done >> 'error_message.csv' 
+  printf "$f1,$f2\n"
+done >> error_message.csv
+
+#Hapus file temporary
+rm message.csv
+rm count.csv
 
 #No1_e
 #File user_statistic.csv #OK

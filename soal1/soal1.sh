@@ -5,9 +5,10 @@
 grep -o '[E|I].*' syslog.log 
 printf "\n"
 
-#No1_b
-#Ambil data log Error tapi bagian username di cut, urut abc, sama hitung banyak errornya
+#b
+# Ambil data log Error tapi bagian username di cut, urut abc, sama hitung banyak errornya
 grep -o 'E.*' syslog.log | cut -d"(" -f 1| sort | uniq -c
+printf "\n"
 
 #No1_c
 #Ambil data log error cuma jumlah error for each username

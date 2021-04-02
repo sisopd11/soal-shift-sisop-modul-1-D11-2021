@@ -223,37 +223,62 @@ Crontab agar scriptnya berjalan hanya pada jam 8 malam setiap tanggal 1 dengan i
 0 20 2/4 * * bash soal3a.sh && soal3b.sh
 ```
 
-c. Untuk mendownload foto kelinci kodenya sama dengan soal 3a, tetapi linknya diganti. kemudian digabungkan  kedalam satu file Kelinci_[Tanggal] seperti soal 3b, sehingga menjadi:
+c. Untuk mendownload foto kelinci kodenya sama dengan soal 3a, tetapi linknya diganti. kemudian digabungkan  kedalam satu file Kelinci_[Tanggal] seperti soal 3b. Agar file jenis gambar yang didownload alternate, maka digunakan cariable yang memanggil tanggal dengna `date`. Kemudian dicek apabile tanggal tersebut berupa genap atau ganjil dengan menggunakan mod.Code terakhir menjadi:
 ```shell
 #!/bin/bash
 
-CAT_LINK="https://loremflickr.com/320/240/bunny"
-i=1
+
 tanggal=`date +%d-%m-%Y`
-mkdir "Kelinci_$tanggal"
-
-while [ $i -le 23 ]
-do	
-	wget -N --content-disposition $CAT_LINK -a Foto.txt
-	i=$((i+1))
-done
+CURDAY=`date +%d`
 
 
-i=1
+if [ $(( $CURDAY % 2 )) -eq 1 ]
+then
+	CAT_LINK="https://loremflickr.com/320/240/bunny"
+	mkdir "Kelinci_$tanggal"
+	i=1
 
-for name in `ls | grep jpg$`
-do
-	mv "$name" "Kelinci_$tanggal"/"Koleksi_$i.jpg"
-	i=$((i+1))
-done
+	while [ $i -le 23 ]
+	do	
+		wget -N --content-disposition $CAT_LINK -a Foto.txt
+		i=$((i+1))
+	done
 
-mv Foto.txt "Kelinci_$tanggal"/
+
+	i=1
+
+	for name in `ls | grep jpg$`
+	do
+		mv "$name" "Kelinci_$tanggal"/"Koleksi_$i.jpg"
+		i=$((i+1))
+	done
+
+	mv Foto.txt "Kelinci_$tanggal"/
+
+else
+	CAT_LINK="https://loremflickr.com/320/240/kitten"
+	mkdir "Kucing_$tanggal"
+	i=1
+
+	while [ $i -le 23 ]
+	do	
+		wget -N --content-disposition $CAT_LINK -a Foto.txt
+		i=$((i+1))
+	done
+
+
+	i=1
+
+	for name in `ls | grep jpg$`
+	do
+		mv "$name" "Kucing_$tanggal"/"Koleksi_$i.jpg"
+		i=$((i+1))
+	done
+
+	mv Foto.txt "Kucing_$tanggal"/
+fi
 ```
-Agar file yang didownload alternate setiap harinya antara kucing dan kelinci, maka crontabnya berupa :
-```
-0 20 1/2 * * bash soal3a.sh && soal3b.sh
-0 20 2/2 * * bash soal3c.sh
-```
+
 
 d. Untuk menjadikan semua folder Kucing_ dan Kelinci_ menjadi 1 file zip dengan password sesuai dengan tanggal, maka digunakan :
 ```shell
@@ -276,6 +301,13 @@ Karena passwordnya merupakan tanggal dengan format mmddyyy, maka digunakan `date
 
 e. Agar semua file koleksi tersebut hanya dizip setiap jam 7 pagi dan diunzip pada jam 6 malam setiap harinya kecuali hari sabtu dan minggu, digunakan crontab berikut :
 ```shell
-0 7 * * mon-fri bash soal3d.sh
-0 18 * * mon-fri unzip -P `date +%m%d%Y` Koleksi.zip && rm Koleksi.zip
+0 7 * * mon-fri /bin/bash /home/avind/Desktop/Soal3_shift1_sisopD/soal3d.sh
+0 18 * * mon-fri /bin/bash /home/avind/Desktop/Soal3_shift1_sisopD/soal3e.sh
+```
+untuk men-unzip file, crontab akan menjalankan soal3e.sh yang berisikan :
+```shell
+#!/bin/bash
+
+unzip -P `date +%m%d%Y` -o /home/avind/Desktop/Soal3_shift1_sisopD/Koleksi.zip -d /home/avind/Desktop/Soal3_shift1_sisopD
+rm /home/avind/Desktop/Soal3_shift1_sisopD/Koleksi.zip
 ```

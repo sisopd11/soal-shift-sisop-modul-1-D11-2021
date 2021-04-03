@@ -81,24 +81,42 @@ Berdasarkan syntax diatas
 - `sort` : mengurutkan data secara ascending (default)
 - `uniq -c` : menghitung jumlah error tiap error message dan di cetak sebagai prefix
 
-### Jawaban 1d
+### d: Jawaban dan Penjelasan
+Pada soal bagian d diminta untuk menuliskan data pada bagian b ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak:
 ```
-#No1_d
-#File error_message #OK
-echo 'Error,Count' > 'error_message.csv'
+#!/bin/bash
 
-#Ambil error messages sama jumlah #FAIL
-grep -o 'E.*' syslog.log | sort | uniq -c | sort -nr while read myfile
-#Divide error sama jumlah
+printf 'Error, Count\n' > error_message.csv
+
+grep "E.*" syslog.log | cut -d' ' -f7- | cut -d'(' -f1 | sort | uniq -c | sort -nr | tr -d '[0-9]' | sed -e 's/^[[:space:]]*//' > message.csv
+grep "E.*" syslog.log | cut -d' ' -f7- | cut -d'(' -f1 | sort | uniq -c | sort -nr | grep -Eo '[0-9]{1,}' > count.csv
+
+paste message.csv count.csv | while IFS="$(printf '\t')" read -r f1 f2
 do
-	#ambil error
-	error=($(echo $myfile | cut =d " " -f 2-)
-	#ambil jumlah
-	count=($(echo $myfile | cut -d " " -f 1 )
-	echo "$error, $count"
-done >> 'error_message.csv'
-```
+  printf "$f1,$f2\n"
+done >> error_message.csv
 
+rm message.csv
+rm count.csv
+```
+berdasarkan syntax diatas:
+membuat dan mengambil data
+- `printf 'Error, Count\n' > error_message.csv` : assign header ke dalam file `error_message.csv`
+- `sort -nr` : mengurutkan data secara descending (nilai terbesar >> nilai terkecil)
+- `tr -d '[0-9]'` : mengabaikan data yang berupa angka
+- `sed -e 's/^[[:space:]]*//' > message.csv` : menghapus spasi pada awal kalimat error message dan menyimpan ke `message.csv` 
+- `grep -Eo '[0-9]{1,}' > count.csv ` : mengambil data berupa angka dan menyimpan ke file `count.csv`
+- `rm` : menghapus file yang sudah tidak dibutuhkan, contohnya message.csv dan count.csv
+
+menginputkan ke dalam file `error_message.csv`
+- `paste message.csv count.csv` : menduplikat data yang ada di file
+- `while IFS="$(printf '\t')" read -r f1 f2` : data yang telah di copy di assign (simpan) ke dalam variabel `f1` dan `f2`
+```
+do
+  printf "$f1,$f2\n"
+done >> error_message.csv 
+```
+- menampilkan data yang ada pada variabel `f1` dan `f2`, kemudian di simpan ke dalam file `error_message.csv`
 
 ## SOAL No.2
 a. Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.

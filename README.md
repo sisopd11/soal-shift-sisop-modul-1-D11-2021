@@ -60,19 +60,26 @@ Pada soal bagian b kita diminta untuk menampilkan peson error beserta jumlah dar
 grep -o 'E.*' syslog.log | cut -d"(" -f1 | sort | uniq -c
 ```
 berdasarkan syntax diatas `grep -o` berfungsi untuk mencari dan mencetak string yang cocok, `'E.*'` merupakan syarat dari data yang ingin ditampilkan yakni dimulai dengan huruf E dan diikuti oleh kata apapun sampai kata terakhir untuk tiap baris log, `cut -d"(" -f1` digunakan untuk memotong data dimulai dengan `(` hingga seterusnya (username), `sort` berfungsi untuk mengurutkan data secara ascending (default), terakhir `uniq -c` digunakan untuk menghitung jumlah error tiap error message dan di cetak sebagai prefix.
-```
 
-### Jawaban 1c
+### c: Jawaban dan Penjelasan
+Pada soal bagian c diminta untuk menampilkan jumlah log ERROR dan INFO untuk setiap user yang ada:
 ```
 #!/bin/bash
-#No1_c
-#Ambil data log error cuma jumlah error for each username
+
 echo Error:
-grep -o 'E.*' syslog.log | cut --complement -d"(" -f 1 | cut -d")" -f 1 | sort | uniq -c
-#Ambil data log info cuma jumlah info for each username
+grep -o 'E.*' syslog.log | cut --complement -d"(" -f1 | cut -d")" -f1 | sort | uniq -c
+
 echo Info:
-grep -o 'I.*' syslog.log | cut --complement -d"(" -f 1 | cut -d")" -f 1 | sort | uniq -c
+grep -o 'I.*' syslog.log | cut --complement -d"(" -f1 | cut -d")" -f1 | sort | uniq -c
 ```
+Berdasarkan syntax diatas
+- `grep -o` : mencari dan mencetak string yang cocok
+- `'E.*'` : data yang ingin diambil diawali huruf E dan diikuti kata apapun (log ERROR)
+- `'I.*'` : data yang ingin diambil diawali huruf I dan diikuti kata apapun (log INFO)
+- `cut --complement -d"(" -f1` : memotong data yang dimulai dengan `(` namun mengambil data lengkap setelah nya.
+- `cut -d")" -f1` : memotong data sampai batasan akhir
+- `sort` : mengurutkan data secara ascending (default)
+- `uniq -c` : menghitung jumlah error tiap error message dan di cetak sebagai prefix
 
 ### Jawaban 1d
 ```

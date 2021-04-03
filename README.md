@@ -52,12 +52,14 @@ grep -o '[E|I].*' syslog.log
 ```
 berdasarkan syntax diatas `grep -o` berfungsi untuk mencari dan mencetak string yang cocok, `'[E|I].*'` merupakan syarat dari data yang ingin ditampilkan yakni dimulai dengan huruf E atau I dan diikuti kata apapun (sampai kata terakhir dari tiap baris log), dan terakhir `syslog.log` adalah nama dari file yang ingin diolah atau diambil informasinya.
 
-### Jawaban 1b
+### b: Jawaban dan Penjelasan
+Pada soal bagian b kita diminta untuk menampilkan peson error beserta jumlah dari tiap pesan error:
 ```
 #!/bin/bash
-#No1_b
-#Ambil data log Error tapi bagian username di cut, urut abc, sama hitung banyak errornya
-grep -o 'E.*' syslog.log | cut -d"(" -f 1| sort | uniq -c
+
+grep -o 'E.*' syslog.log | cut -d"(" -f1 | sort | uniq -c
+```
+berdasarkan syntax diatas `grep -o` berfungsi untuk mencari dan mencetak string yang cocok, `'E.*'` merupakan syarat dari data yang ingin ditampilkan yakni dimulai dengan huruf E dan diikuti oleh kata apapun sampai kata terakhir untuk tiap baris log, `cut -d"(" -f1` digunakan untuk memotong data dimulai dengan `(` hingga seterusnya (username), `sort` berfungsi untuk mengurutkan data secara ascending (default), terakhir `uniq -c` digunakan untuk menghitung jumlah error tiap error message dan di cetak sebagai prefix.
 ```
 
 ### Jawaban 1c

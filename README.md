@@ -1,10 +1,5 @@
 # soal-shift-sisop-modul-1-D11-2021
 Modul 1 - Shell Script, Cron dan AWK 
-|Nama|NRP|
-|----|-----|
-|Afifah Nur Sabrina Syamsudin|05111940000022|
-|Dewi Mardani Cristin|05111940000225|
-|Avind Pramana Azhari|05111940000226|
 
 ## Soal No 1
 Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberikan tugas untuk membuat laporan harian untuk aplikasi internal perusahaan, ticky. Terdapat 2 laporan yang harus dia buat, yaitu laporan daftar peringkat pesan error terbanyak yang dibuat oleh ticky dan laporan penggunaan user pada aplikasi ticky. Untuk membuat laporan tersebut, Ryujin harus melakukan beberapa hal berikut:
@@ -117,6 +112,98 @@ do
 done >> error_message.csv 
 ```
 - menampilkan data yang ada pada variabel `f1` dan `f2`, kemudian di simpan ke dalam file `error_message.csv`
+
+### e: Jawaban dan Penjelasan
+Pada soal bagian e diminta untuk menuliskan bagian e dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
+```
+#!/bin/bash
+
+printf 'Username, INFO, ERROR\n' > user_statistic.csv
+
+cat syslog.log | cut -d'(' -f2- | cut -d')' -f1 | sort | uniq -c | sort -nr | tr -d '[0-9]' | sed -e 's/^[[:space:]]*//' > user.csv
+grep "E.*" syslog.log | cut -d'(' -f2- | cut -d')' -f1 | sort | uniq -c | sort -nr | grep -Eo '[0-9]{1,}' > count_error.csv
+grep "E.*" syslog.log | cut -d'(' -f2- | cut -d')' -f1 | sort | uniq -c | sort -nr | tr -d '[0-9]' | sed -e 's/^[[:space:]]*//' > user_error.csv
+grep "I.*" syslog.log | cut -d'(' -f2 | cut -d')' -f1 | sort | uniq -c | sort -nr | grep -Eo '[0-9]{1,}' > count_info.csv
+grep "I.*" syslog.log | cut -d'(' -f2 | cut -d')' -f1 | sort | uniq -c | sort -nr | tr -d '[0-9]' | sed -e 's/^[[:space:]]*//' > user_info.csv
+
+while read username
+do
+  user="$username"
+  info=0
+  error=0
+  
+  paste count_error.csv user_error.csv | (while read counterror usererror
+  do
+    if [ "$user" == "$usererror" ]
+     then 
+         error=$counterror 
+         break
+    fi
+  done
+  
+  paste count_info.csv user_info.csv | (while read countinfo userinfo
+  do
+    if [ "$user" == "$userinfo" ]
+     then 
+         info=$countinfo 
+         break
+    fi
+  done
+
+ printf "$user,$info,$error\n" >> user_statistic.csv))
+done < user.csv
+
+rm user.csv
+rm count_error.csv
+rm user_error.csv
+rm count_info.csv
+rm user_info.csv
+```
+berdasarkan syntax diatas:
+mencari data username, jumlah error dan info, dan username yang memiliki data error atau info
+- `line 5` : mengambil username dan menyimpan di `user.csv`
+- `line 6` : menghitung jumlah error dan menyimpan di `count_error.csv`
+- `line 7` : mengambil username yang memiliki data log ERROR dan menyimpan di `user_error.csv`
+- `line 8` : menghitung jumlah info dan menyimpan di `count_info.csv`
+- `line 9` : mengambil username yang memiliki data log ERROR dan menyimpan di `user_info.csv`
+
+mengolah data
+```
+user="$username"
+info=0
+error=0
+```
+- inisialisasi variabel user dengan data username
+- inisialisasi nilai awal dari error dan info sama dengan `0`.
+
+```
+paste count_error.csv user_error.csv | (while read counterror usererror
+do
+   if [ "$user" == "$usererror" ]
+    then
+        error=$counterror 
+        break
+   fi
+done
+```
+- menduplikat data yang ada di file `count_error.csv` dan `user_error.csv`
+- memeriksa jika data username yang memiliki data error sama dengan data username maka akan assign jumlah info ke info
+
+```
+paste count_info.csv user_info.csv | (while read countinfo userinfo
+do
+  if [ "$user" == "$userinfo" ]
+   then 
+       info=$countinfo 
+       break
+  fi
+done
+```
+- menduplikat data yang ada di file `count_info.csv` dan `user_info.csv`
+- memeriksa jika data username yang memiliki data info sama dengan data username maka akan meng assign jumlah error ke error
+
+`printf "$user,$info,$error\n" >> user_statistic.csv`
+- menampilkan data yang ada pada variabel `user`, `info` dan `error`, kemudian di simpan ke dalam file `user_statistic.csv`
 
 ## SOAL No.2
 a. Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.

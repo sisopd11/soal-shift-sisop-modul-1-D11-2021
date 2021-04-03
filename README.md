@@ -1,4 +1,11 @@
 # soal-shift-sisop-modul-1-D11-2021
+Modul 1 - Shell Script, Cron dan AWK 
+|Nama|NRP|
+|----|-----|
+|Afifah Nur Sabrina Syamsudin|05111940000022|
+|Dewi Mardani Cristin|05111940000225|
+|Avind Pramana Azhari|05111940000226|
+
 
 ## Soal No 1
 Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberikan tugas untuk membuat laporan harian untuk aplikasi internal perusahaan, ticky. Terdapat 2 laporan yang harus dia buat, yaitu laporan daftar peringkat pesan error terbanyak yang dibuat oleh ticky dan laporan penggunaan user pada aplikasi ticky. Untuk membuat laporan tersebut, Ryujin harus melakukan beberapa hal berikut:

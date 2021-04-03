@@ -43,13 +43,14 @@ ryujin.1203,1,3
 
 - Tidak boleh menggunakan AWK
 
-### Jawaban 1a
+### a: Jawaban dan Penjelasan
+Pada soal bagian a kita diminta untuk menampilkan informasi jenis log (ERROR/INFO), pesan log, dan username pada setiap baris lognya:
 ```
 #!/bin/bash
-#No1_a
-#Ambil data kata depan Error or Info sampe username dari file syslog.log
+
 grep -o '[E|I].*' syslog.log
 ```
+berdasarkan syntax diatas `grep -o` berfungsi untuk mencari dan mencetak string yang cocok, `'[E|I].*'` merupakan syarat dari data yang ingin ditampilkan yakni dimulai dengan huruf E atau I dan diikuti kata apapun (sampai kata terakhir dari tiap baris log), dan terakhir `syslog.log` adalah nama dari file yang ingin diolah atau diambil informasinya.
 
 ### Jawaban 1b
 ```

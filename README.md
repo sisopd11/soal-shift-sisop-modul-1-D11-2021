@@ -1,5 +1,10 @@
 # soal-shift-sisop-modul-1-D11-2021
 Modul 1 - Shell Script, Cron dan AWK 
+|Nama|NRP|
+|----|-----|
+|Afifah Nur Sabrina Syamsudin|05111940000022|
+|Dewi Mardani Cristin|05111940000225|
+|Avind Pramana Azhari|05111940000226|
 
 ## Soal No 1
 Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberikan tugas untuk membuat laporan harian untuk aplikasi internal perusahaan, ticky. Terdapat 2 laporan yang harus dia buat, yaitu laporan daftar peringkat pesan error terbanyak yang dibuat oleh ticky dan laporan penggunaan user pada aplikasi ticky. Untuk membuat laporan tersebut, Ryujin harus melakukan beberapa hal berikut:
@@ -204,6 +209,12 @@ done
 
 `printf "$user,$info,$error\n" >> user_statistic.csv`
 - menampilkan data yang ada pada variabel `user`, `info` dan `error`, kemudian di simpan ke dalam file `user_statistic.csv`
+
+## Kendala yang dihadapi
+1. Tidak bisa melakukan inisialisasi data dan penggunaan regex gagal sehingga menggunakan perintah grep
+2. Pada soal bagian a, ketika menukar urutan syarat `'[E|I].*'` menjadi `'[I|E].*'` hanya dimunculkan huruf I dan E secara random.
+3. Saat menghitung jumlah error tanpa `sort` yang dimunculkan adalah total error
+4. Pada bagian d dan e, saat ingin menyimpan jawaban bagian b dan c dengan variabel tidak ada data yang muncul pada file csv.
 
 # SOAL No.2
 Steven dan Manis mendirikan sebuah startup bernama “TokoShiSop”. Sedangkan kamu dan Clemong adalah karyawan pertama dari TokoShiSop. Setelah tiga tahun bekerja, Clemong diangkat menjadi manajer penjualan TokoShiSop, sedangkan kamu menjadi kepala gudang yang mengatur keluar masuknya barang.

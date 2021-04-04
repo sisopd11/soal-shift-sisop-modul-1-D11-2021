@@ -52,6 +52,9 @@ grep -o '[E|I].*' syslog.log
 ```
 berdasarkan syntax diatas `grep -o` berfungsi untuk mencari dan mencetak string yang cocok, `'[E|I].*'` merupakan syarat dari data yang ingin ditampilkan yakni dimulai dengan huruf E atau I dan diikuti kata apapun (sampai kata terakhir dari tiap baris log), dan terakhir `syslog.log` adalah nama dari file yang ingin diolah atau diambil informasinya.
 
+Output:
+![Gambar output bagian a](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-47-29.png)
+
 ### b: Jawaban dan Penjelasan
 Pada soal bagian b kita diminta untuk menampilkan peson error beserta jumlah dari tiap pesan error:
 ```
@@ -60,6 +63,9 @@ Pada soal bagian b kita diminta untuk menampilkan peson error beserta jumlah dar
 grep -o 'E.*' syslog.log | cut -d"(" -f1 | sort | uniq -c
 ```
 berdasarkan syntax diatas `grep -o` berfungsi untuk mencari dan mencetak string yang cocok, `'E.*'` merupakan syarat dari data yang ingin ditampilkan yakni dimulai dengan huruf E dan diikuti oleh kata apapun sampai kata terakhir untuk tiap baris log, `cut -d"(" -f1` digunakan untuk memotong data dimulai dengan `(` hingga seterusnya (username), `sort` berfungsi untuk mengurutkan data secara ascending (default), terakhir `uniq -c` digunakan untuk menghitung jumlah error tiap error message dan di cetak sebagai prefix.
+
+Output:
+![Gambar output bagian b](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-49-03.png)
 
 ### c: Jawaban dan Penjelasan
 Pada soal bagian c diminta untuk menampilkan jumlah log ERROR dan INFO untuk setiap user yang ada:
@@ -80,6 +86,9 @@ Berdasarkan syntax diatas
 - `cut -d")" -f1` : memotong data sampai batasan akhir
 - `sort` : mengurutkan data secara ascending (default)
 - `uniq -c` : menghitung jumlah error tiap error message dan di cetak sebagai prefix
+
+Output:
+![Gambar output bagian c](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-49-33.png)
 
 ### d: Jawaban dan Penjelasan
 Pada soal bagian d diminta untuk menuliskan data pada bagian b ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak:
@@ -117,6 +126,9 @@ do
 done >> error_message.csv 
 ```
 - menampilkan data yang ada pada variabel `f1` dan `f2`, kemudian di simpan ke dalam file `error_message.csv`
+
+Output:
+![Gambar output bagian d](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-46-18.png)
 
 ### e: Jawaban dan Penjelasan
 Pada soal bagian e diminta untuk menuliskan bagian e dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
@@ -209,6 +221,9 @@ done
 
 `printf "$user,$info,$error\n" >> user_statistic.csv`
 - menampilkan data yang ada pada variabel `user`, `info` dan `error`, kemudian di simpan ke dalam file `user_statistic.csv`
+
+Output:
+![Gambar output bagian e](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-45-46.png)
 
 ## Kendala yang dihadapi
 1. Tidak bisa melakukan inisialisasi data dan penggunaan regex gagal sehingga menggunakan perintah grep

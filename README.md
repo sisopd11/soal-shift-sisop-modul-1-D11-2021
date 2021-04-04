@@ -425,6 +425,12 @@ Crontab agar scriptnya berjalan hanya pada jam 8 malam setiap tanggal 1 dengan i
 0 20 1/7 * * bash soal3a.sh && soal3b.sh
 0 20 2/4 * * bash soal3a.sh && soal3b.sh
 ```
+Bentuk isi file adalah sebagai berikut:
+![image](https://user-images.githubusercontent.com/80894892/113507907-58e54780-9577-11eb-87f5-d3f17b2660e8.png)
+
+Dengan isi log untuk setiap gambar yang didownload sebagai berikut:
+![image](https://user-images.githubusercontent.com/80894892/113507926-7ca88d80-9577-11eb-94b1-32d82ca3a815.png)
+
 
 c. Untuk mendownload foto kelinci kodenya sama dengan soal 3a, tetapi linknya diganti. kemudian digabungkan  kedalam satu file Kelinci_[Tanggal] seperti soal 3b. Agar file jenis gambar yang didownload alternate, maka digunakan cariable yang memanggil tanggal dengna `date`. Kemudian dicek apabile tanggal tersebut berupa genap atau ganjil dengan menggunakan mod.Code terakhir menjadi:
 ```shell
@@ -481,6 +487,8 @@ else
 	mv Foto.txt "Kucing_$tanggal"/
 fi
 ```
+Hasil dari kode ini, akan manghasilkan folder kucing untuk tanggal genap, dan kelinci pda tanggal ganjil.
+![image](https://user-images.githubusercontent.com/80894892/113507985-c2655600-9577-11eb-9959-c0f1eca12576.png)
 
 
 d. Untuk menjadikan semua folder Kucing_ dan Kelinci_ menjadi 1 file zip dengan password sesuai dengan tanggal, maka digunakan :
@@ -514,3 +522,6 @@ untuk men-unzip file, crontab akan menjalankan soal3e.sh yang berisikan :
 unzip -P `date +%m%d%Y` -o /home/avind/Desktop/Soal3_shift1_sisopD/Koleksi.zip -d /home/avind/Desktop/Soal3_shift1_sisopD
 rm /home/avind/Desktop/Soal3_shift1_sisopD/Koleksi.zip
 ```
+
+## Kesulitan:
+Pada soal ini, hal yang menurut saya menjadi tantangan yaitu cara agar gambar yang didownload tidak boleh ada yang sama, kemudian cara agar cronjob bekerja dengan semestinya

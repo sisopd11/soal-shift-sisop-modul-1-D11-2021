@@ -205,8 +205,24 @@ done
 `printf "$user,$info,$error\n" >> user_statistic.csv`
 - menampilkan data yang ada pada variabel `user`, `info` dan `error`, kemudian di simpan ke dalam file `user_statistic.csv`
 
-## SOAL No.2
-a. Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.
+**## SOAL No.2**
+Steven dan Manis mendirikan sebuah startup bernama “TokoShiSop”. Sedangkan kamu dan Clemong adalah karyawan pertama dari TokoShiSop. Setelah tiga tahun bekerja, Clemong diangkat menjadi manajer penjualan TokoShiSop, sedangkan kamu menjadi kepala gudang yang mengatur keluar masuknya barang.
+
+Tiap tahunnya, TokoShiSop mengadakan Rapat Kerja yang membahas bagaimana hasil penjualan dan strategi kedepannya yang akan diterapkan. Kamu sudah sangat menyiapkan sangat matang untuk raker tahun ini. Tetapi tiba-tiba, Steven, Manis, dan Clemong meminta kamu untuk mencari beberapa kesimpulan dari data penjualan “Laporan-TokoShiSop.tsv”.
+
+a. Steven ingin mengapresiasi kinerja karyawannya selama ini dengan mengetahui Row ID dan profit percentage terbesar (jika hasil profit percentage terbesar lebih dari 1, maka ambil Row ID yang paling besar). Karena kamu bingung, Clemong memberikan definisi dari profit percentage, yaitu:
+	Profit Percentage = (Profit Cost Price) 100
+Cost Price didapatkan dari pengurangan Sales dengan Profit. (Quantity diabaikan).
+
+b. Clemong memiliki rencana promosi di Albuquerque menggunakan metode MLM. Oleh karena itu, Clemong membutuhkan daftar nama customer pada transaksi tahun 2017 di Albuquerque.
+
+c. TokoShiSop berfokus tiga segment customer, antara lain: Home Office, Customer, dan Corporate. Clemong ingin meningkatkan penjualan pada segmen customer yang paling sedikit. Oleh karena itu, Clemong membutuhkan segment customer dan jumlah transaksinya yang paling sedikit.
+
+d. TokoShiSop membagi wilayah bagian (region) penjualan menjadi empat bagian, antara lain: Central, East, South, dan West. Manis ingin mencari wilayah bagian (region) yang memiliki total keuntungan (profit) paling sedikit dan total keuntungan wilayah tersebut.
+
+**Jawaban**
+**No.2A**
+Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.
 ```
 export LC_ALL=C
 awk '
@@ -217,13 +233,22 @@ BEGIN{FS="\t"}
  profitpersentase=profit/costPrice*100
    if(maks<=profitpersentase){
      maks=profitpersentase
-     RowID=$1s}
+     RowID=$1}
 }
 END {
  printf("Transaksi terkahir dengan profit persentase terbesar yaitu %d dengan persentase %d%%\n", RowID, maks)
 } ' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-### No.2B
+- FS="\t" : Untuk memberitahu field bahwa separator yang digunakan adalah Tab.
+- Variabel profit : untuk menampung data yang ada pada kolom ke 21 yaitu data profit.
+- Variabel costPrice : untuk menampung hasil pengurangan dari $18 dengan $21 dimana $18 merupakan kolom sales sedangkan $21 merupakan profit.
+- profitpersentase = (profit/costPrice.100) : Untuk mencari persentase profit terbesar maka kita dapat membagi profit dengan costPrice lalu dikali dengan 100.
+- if(maks<=profitpersentase) : Untuk mencari persentase profit terbesar
+- profit persentase terbesar akan disimpan di variabel maks dan IDnya akan disimpan kedalam variabel RowID.
+- END : Setelah selesai pengecekan maka kita akan mencetak RowID dan persentase profit terbesarnya.
+ 
+
+**No.2B**
 Pada soal ini kita akan menampilkan nama seluruh customer yang melakukan transaksi pada tahun 2017 di Albuquerque
 ```
 export LC_ALL=

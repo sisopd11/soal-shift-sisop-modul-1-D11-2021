@@ -205,7 +205,7 @@ done
 `printf "$user,$info,$error\n" >> user_statistic.csv`
 - menampilkan data yang ada pada variabel `user`, `info` dan `error`, kemudian di simpan ke dalam file `user_statistic.csv`
 
-**## SOAL No.2**
+#SOAL No.2
 Steven dan Manis mendirikan sebuah startup bernama “TokoShiSop”. Sedangkan kamu dan Clemong adalah karyawan pertama dari TokoShiSop. Setelah tiga tahun bekerja, Clemong diangkat menjadi manajer penjualan TokoShiSop, sedangkan kamu menjadi kepala gudang yang mengatur keluar masuknya barang.
 
 Tiap tahunnya, TokoShiSop mengadakan Rapat Kerja yang membahas bagaimana hasil penjualan dan strategi kedepannya yang akan diterapkan. Kamu sudah sangat menyiapkan sangat matang untuk raker tahun ini. Tetapi tiba-tiba, Steven, Manis, dan Clemong meminta kamu untuk mencari beberapa kesimpulan dari data penjualan “Laporan-TokoShiSop.tsv”.
@@ -220,8 +220,9 @@ c. TokoShiSop berfokus tiga segment customer, antara lain: Home Office, Customer
 
 d. TokoShiSop membagi wilayah bagian (region) penjualan menjadi empat bagian, antara lain: Central, East, South, dan West. Manis ingin mencari wilayah bagian (region) yang memiliki total keuntungan (profit) paling sedikit dan total keuntungan wilayah tersebut.
 
-**Jawaban**
-**No.2A**
+#Jawaban
+##No.2A
+
 Pada soal ini, kita akan menghitung perentase keuntungan dimana, dalam penghitungannya kita dapat menggunakan rumus yang telah tersedia, pada soal yakni profit/(sales-profit)x100. Kemudian kita akan menampilkan RowID dari profit terbesar yang telah dihitung.
 ```
 export LC_ALL=C
@@ -245,10 +246,10 @@ END {
 - profitpersentase = (profit/costPrice.100) : Untuk mencari persentase profit terbesar maka kita dapat membagi profit dengan costPrice lalu dikali dengan 100.
 - if(maks<=profitpersentase) : Untuk mencari persentase profit terbesar
 - profit persentase terbesar akan disimpan di variabel maks dan IDnya akan disimpan kedalam variabel RowID.
-- END : Setelah selesai pengecekan maka kita akan mencetak RowID dan persentase profit terbesarnya.
- 
+- END = Setelah selesai pengecekan maka kita akan mencetak RowID dan persentase profit terbesarnya.
+- /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt = hasil output dari directori /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv dikirim ke file hasil.txt, jika file sudah ada maka isinya akan ditambah di akhir file.
 
-**No.2B**
+##No.2B
 Pada soal ini kita akan menampilkan nama seluruh customer yang melakukan transaksi pada tahun 2017 di Albuquerque
 ```
 export LC_ALL=
@@ -267,7 +268,14 @@ END{
   {print customerName}
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-### No.2C
+##Penjelasan :
+- FS="\t" = Untuk memberi tahu field bahwa separator yang akan digunakan adalah Tab.
+- Variabel tahun = Untuk menyimpan data dari kolom kedua yakni Order ID.
+- if(tahun~"2017" && city=="Albuquerque") = Untuk mengecek data yg OrderIDnya 2017 dan Citynya adalah Albuquerque.
+- arrlist[$7]++ = Menyimpan nama customer yang memenuhi kodisi if diatas kedalam arrlist.
+- End = Setelah selesai pengecekan kita akan mencetak nama-nama customer yang ada pada arrlist.
+
+## No.2C
 Pada soal ini kita akan menampilkan jumlah transaksi yang paling sedikit dari tiga segment customer
 ```
 export LC_ALL=C
@@ -289,7 +297,13 @@ END {
   printf("\nTipe segment customer yang penjualannya paling sedikit adalah %s dengan segment %.1f\n", sum, minSales)
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
-### 2d
+##Penjelasan
+- FS="\t" = Untuk memberitahukan kepada field bahwa separator yang digunakan adalah Tab.
+- if(NR!=1) = Untuk kondisi dimana number of Record yang akan digunakan tidak sama dengan 1 karena NR=1 adalah keterangan penamaan tabel.
+- segment[$8]++ = Untuk menyimpan segment customer beserta jumlah transaksinya yang ada pada kolom kedelapan ke dalam suatu array bernama segment.
+- END = kita akan mencari segment customer yang melakkukan transaksi paling sedikit.Oleh karena itu, pertama kita akan melakukan loop kemudian kita bandingkan dengan nilai minimum, jumlah transaksi yang paling kecil akan disimpan kedalam minSales dimana variabel ini berisi nama Segment dengan indek transaksi terkecil sementara itu, variabe sum akan menyimpan temp yang merupakan jumlah penjualan paling sedikit, kemudian nama segment dengan penjualan paling sedikit dan jumlah penjualannya akan dicetak.
+
+## 2d
 Pada soal ini kita akan mencari wilayah bagian atau region yang memiliki profit paling sedikit dan kita akan menampilkan total keuntungan dari region yang telah kita cari sebelumnya.
 ```
 export LC_ALL=C
@@ -311,6 +325,16 @@ END {
   printf("\nWilayah bagian (region) yang memiliki total keuntungan (profit) yang paling sedikit adalah %s dengan total keuntungan %.1f\n", minwil, regmin);
 }' /home/dewi/SISOP/praktikum1/Laporan-TokoShiSop.tsv >> hasil.txt
 ```
+##Penjelasan
+- FS="\t" = Untuk memberi tahu field bahwa separator yang digunakan adalah Tab.
+- if(NR!=1) = Untuk kondisi dimana number of Record yang akan digunakan tidak sama dengan 1 karena NR=1 adalah keterangan penamaan tabel.
+- listRegion[$13]+=$21 = Untuk menghitung profit(tabel ke-21) berdasarkan wilayahnya, wilayah(tabel ke-13). Sehingga total profit setiap wilayah akan tersimpan ke dalam array listRegion.
+- END = Sama halnya dengan No.2C, kita akan mengecek nilai-nilai dalam array listRegion dan akan kita bandingkan terus dengan regmin untuk mendapatkan region dengan profit paling sedikit.Kemudian, region dengan profit paling sedikit akan disimpan kedalam variabel minwil dan total keuntungannya akan disimpan ke dalam variabel regmin. Setelah itu, kita bisa mencetak minwil dan regminnya.
+
+##2E
+Output :
+untuk melihat hasil dari penngerjaan nomor 2A - 2D kita dapat menjalankan nano hasil.txt, dan berikut ini merupakan outputnya
+!
 
 ## Soal No 3
 a. Pada soal ini, kita diminta untuk mendownload gambar dari https://loremflickr.com/320/240/kitten sebanyak 23 buah tanpa ada gambar yang sama. Kemudian memasukkan log dari download tersebut kedalam file Foto.log. Kode yang saya gunakan yaitu:

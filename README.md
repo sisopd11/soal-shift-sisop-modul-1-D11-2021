@@ -6,7 +6,7 @@ Modul 1 - Daemon dan Proses
 |Dewi Mardani Cristin|05111940000225|
 |Avind Pramana Azhari|05111940000226|
 
-## Soal No 1
+## Soal No 3
 Ranora adalah mahasiswa Teknik Informatika yang saat ini sedang menjalani magang di perusahan ternama yang bernama “FakeKos Corp.”, perusahaan yang bergerak dibidang keamanan data. Karena Ranora masih magang, maka beban tugasnya tidak sebesar beban tugas pekerja tetap perusahaan. Di hari pertama Ranora bekerja, pembimbing magang Ranora memberi tugas pertamanya untuk membuat sebuah program. 
 
 (a) Membuat sebuah program C yang dimana setiap 40 detik membuat sebuah direktori dengan nama sesuai timestamp **[YYYY-mm-dd_HH:ii:ss]**.
@@ -54,7 +54,11 @@ Output:
 - ![Gambar output bagian a](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-47-29.png)
 
 ### b: Jawaban dan Penjelasan
-Pada soal bagian b kita diminta untuk menampilkan peson error beserta jumlah dari tiap pesan error:
+Pada soal bagian b kita diminta untuk download 10 gambar dari
+**https://picsum.photos/**, dimana tiap gambar di download setiap 5 detik. Tiap
+gambar berbentuk persegi dengan ukuran _**(t%1000)+100**_ piksel dimana t adalah
+detik Epoch Unix. Gambar tersebut diberi nama dengan format timestamp **[YYYY-
+mm-dd_HH:ii:ss]**.
 ```
 #!/bin/bash
 
@@ -66,7 +70,8 @@ Output:
 - ![Gambar output bagian b](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-49-03.png)
 
 ### c: Jawaban dan Penjelasan
-Pada soal bagian c diminta untuk menampilkan jumlah log ERROR dan INFO untuk setiap user yang ada:
+Pada soal bagian c diminta untuk membuat file "Status.txt" yang isinya tulisan "Download Success" setelah directoy terisi 10 gambar.
+Setelah itu directory dizip dan dihapus agar terlihat lebih rapih.
 ```
 #!/bin/bash
 
@@ -89,7 +94,7 @@ Output:
 - ![Gambar output bagian c](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-49-33.png)
 
 ### d: Jawaban dan Penjelasan
-Pada soal bagian d diminta untuk menuliskan data pada bagian b ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak:
+Pada soal bagian d diminta untuk membuat file "Killer.sh" untuk memudahkan ranora dalam mengontrol program, menterminate dan menghapus programnya sendiri saat program berjalan
 ```
 #!/bin/bash
 
@@ -129,7 +134,7 @@ Output:
 - ![Gambar output bagian d](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-46-18.png)
 
 ### e: Jawaban dan Penjelasan
-Pada soal bagian e diminta untuk menuliskan bagian e dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
+Pada soal bagian e diminta untuk membuat program dapat berjalan dengan dua mode "-x": program berhenti saat semua proses selesai dan "-z": langsung menghentikan program.
 ```
 #!/bin/bash
 

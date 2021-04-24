@@ -1,48 +1,40 @@
 # soal-shift-sisop-modul-1-D11-2021
-Modul 1 - Daemon dan Proses 
+Modul 1 - Shell Script, Cron dan AWK 
 |Nama|NRP|
 |----|-----|
 |Afifah Nur Sabrina Syamsudin|05111940000022|
 |Dewi Mardani Cristin|05111940000225|
 |Avind Pramana Azhari|05111940000226|
 
-## Soal No 3
-Ranora adalah mahasiswa Teknik Informatika yang saat ini sedang menjalani magang di perusahan ternama yang bernama “FakeKos Corp.”, perusahaan yang bergerak dibidang keamanan data. Karena Ranora masih magang, maka beban tugasnya tidak sebesar beban tugas pekerja tetap perusahaan. Di hari pertama Ranora bekerja, pembimbing magang Ranora memberi tugas pertamanya untuk membuat sebuah program. 
-
-(a) Membuat sebuah program C yang dimana setiap 40 detik membuat sebuah direktori dengan nama sesuai timestamp **[YYYY-mm-dd_HH:ii:ss]**.
-
-(b) Tiap-tiap folder lalu diisi dengan 10 gambar yang di download dari
-**https://picsum.photos/**, dimana tiap gambar di download setiap 5 detik. Tiap
-gambar berbentuk persegi dengan ukuran _**(t%1000)+50**_ piksel dimana t adalah
-detik Epoch Unix. Gambar tersebut diberi nama dengan format timestamp **[YYYY-
-mm-dd_HH:ii:ss]**.
-
-(c) Setelah direktori telah terisi dengan 10 gambar, program tersebut akan membuat sebuah file **“status.txt”**,
-dimana didalamnya berisi pesan **“Download Success”** yang terenkripsi dengan teknik Caesar Cipher dan dengan shift 5.
-Caesar Cipher adalah Teknik enkripsi sederhana yang dimana dapat melakukan enkripsi string sesuai dengan shift/key yang kita tentukan.
-Misal huruf “A” akan dienkripsi dengan shift 4 maka akan menjadi “E”. Karena Ranora orangnya perfeksionis dan rapi,
-dia ingin setelah file tersebut dibuat, direktori akan di zip dan direktori akan didelete, sehingga menyisakan hanya file zip saja.
-
-(d) Untuk mempermudah pengendalian program, pembimbing magang Ranora ingin program tersebut akan men-generate sebuah program “Killer” yang executable,
-dimana program tersebut akan menterminasi semua proses program yang sedang berjalan dan akan menghapus dirinya sendiri setelah program dijalankan.
-Karena Ranora menyukai sesuatu hal yang baru, maka Ranora memiliki ide untuk program “Killer” yang dibuat nantinya harus merupakan **program bash**.
-
-(e) Pembimbing magang Ranora juga ingin nantinya program utama yang dibuat Ranora dapat dijalankan di dalam dua mode.
-Untuk mengaktifkan mode pertama, program harus dijalankan dengan argumen -z, dan Ketika dijalankan dalam mode pertama,
-program utama akan langsung menghentikan semua operasinya Ketika program Killer dijalankan.
-Sedangkan untuk mengaktifkan mode kedua, program harus dijalankan dengan argumen -x, dan Ketika dijalankan dalam mode kedua, program utama akan berhenti namun membiarkan proses
-di setiap direktori yang masih berjalan hingga selesai
-(Direktori yang sudah dibuat akan mendownload gambar sampai selesai dan membuat file txt, lalu zip dan delete direktori).
-
-Ranora meminta bantuanmu untuk membantunya dalam membuat program tersebut. Karena kamu anak baik dan rajin menabung,
-bantulah Ranora dalam membuat program tersebut!
-Note:
-- Tidak boleh menggunakan system() dan mkdir()
-- Program utama merupakan **SEBUAH PROGRAM C**
-- Wajib memuat algoritma Caesar Cipher pada program utama yang dibuat
+## Soal No 1
+Ryujin baru saja diterima sebagai IT support di perusahaan Bukapedia. Dia diberikan tugas untuk membuat laporan harian untuk aplikasi internal perusahaan, ticky. Terdapat 2 laporan yang harus dia buat, yaitu laporan daftar peringkat pesan error terbanyak yang dibuat oleh ticky dan laporan penggunaan user pada aplikasi ticky. Untuk membuat laporan tersebut, Ryujin harus melakukan beberapa hal berikut:
+(a) Mengumpulkan informasi dari log aplikasi yang terdapat pada file syslog.log. Informasi yang diperlukan antara lain: jenis log (ERROR/INFO), pesan log, dan username pada setiap baris lognya. Karena Ryujin merasa kesulitan jika harus memeriksa satu per satu baris secara manual, dia menggunakan regex untuk mempermudah pekerjaannya. Bantulah Ryujin membuat regex tersebut.
+(b) Kemudian, Ryujin harus menampilkan semua pesan error yang muncul beserta jumlah kemunculannya.
+(c) Ryujin juga harus dapat menampilkan jumlah kemunculan log ERROR dan INFO untuk setiap user-nya.
+Setelah semua informasi yang diperlukan telah disiapkan, kini saatnya Ryujin menuliskan semua informasi tersebut ke dalam laporan dengan format file csv.
+(d) Semua informasi yang didapatkan pada poin b dituliskan ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak.
+Contoh:
+```
+Error,Count
+Permission denied,5
+File not found,3
+Failed to connect to DB,2
+```
+(e) Semua informasi yang didapatkan pada poin c dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
+Contoh:
+```
+Username,INFO,ERROR
+kaori02,6,0
+kousei01,2,2
+ryujin.1203,1,3
+```
+**Catatan :**
+- Setiap baris pada file syslog.log mengikuti pola berikut:
+ ```<time> <hostname> <app_name>: <log_type> <log_message> (<username>)```
+- Tidak boleh menggunakan AWK
 
 ### a: Jawaban dan Penjelasan
-Pada soal bagian a kita diminta untuk Membuat sebuah program C yang dimana setiap 40 detik membuat sebuah direktori dengan nama sesuai timestamp **[YYYY-mm-dd_HH:ii:ss]**.
+Pada soal bagian a kita diminta untuk menampilkan informasi jenis log (ERROR/INFO), pesan log, dan username pada setiap baris lognya:
 ```
 #!/bin/bash
 
@@ -54,11 +46,7 @@ Output:
 - ![Gambar output bagian a](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-47-29.png)
 
 ### b: Jawaban dan Penjelasan
-Pada soal bagian b kita diminta untuk download 10 gambar dari
-**https://picsum.photos/**, dimana tiap gambar di download setiap 5 detik. Tiap
-gambar berbentuk persegi dengan ukuran _**(t%1000)+100**_ piksel dimana t adalah
-detik Epoch Unix. Gambar tersebut diberi nama dengan format timestamp **[YYYY-
-mm-dd_HH:ii:ss]**.
+Pada soal bagian b kita diminta untuk menampilkan peson error beserta jumlah dari tiap pesan error:
 ```
 #!/bin/bash
 
@@ -70,8 +58,7 @@ Output:
 - ![Gambar output bagian b](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-49-03.png)
 
 ### c: Jawaban dan Penjelasan
-Pada soal bagian c diminta untuk membuat file "Status.txt" yang isinya tulisan "Download Success" setelah directoy terisi 10 gambar.
-Setelah itu directory dizip dan dihapus agar terlihat lebih rapih.
+Pada soal bagian c diminta untuk menampilkan jumlah log ERROR dan INFO untuk setiap user yang ada:
 ```
 #!/bin/bash
 
@@ -94,7 +81,7 @@ Output:
 - ![Gambar output bagian c](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-49-33.png)
 
 ### d: Jawaban dan Penjelasan
-Pada soal bagian d diminta untuk membuat file "Killer.sh" untuk memudahkan ranora dalam mengontrol program, menterminate dan menghapus programnya sendiri saat program berjalan
+Pada soal bagian d diminta untuk menuliskan data pada bagian b ke dalam file error_message.csv dengan header Error,Count yang kemudian diikuti oleh daftar pesan error dan jumlah kemunculannya diurutkan berdasarkan jumlah kemunculan pesan error dari yang terbanyak:
 ```
 #!/bin/bash
 
@@ -134,7 +121,7 @@ Output:
 - ![Gambar output bagian d](https://github.com/sisopd11/soal-shift-sisop-modul-1-D11-2021/blob/main/soal1/Screenshot%20from%202021-04-01%2013-46-18.png)
 
 ### e: Jawaban dan Penjelasan
-Pada soal bagian e diminta untuk membuat program dapat berjalan dengan dua mode "-x": program berhenti saat semua proses selesai dan "-z": langsung menghentikan program.
+Pada soal bagian e diminta untuk menuliskan bagian e dituliskan ke dalam file user_statistic.csv dengan header Username,INFO,ERROR diurutkan berdasarkan username secara ascending.
 ```
 #!/bin/bash
 
